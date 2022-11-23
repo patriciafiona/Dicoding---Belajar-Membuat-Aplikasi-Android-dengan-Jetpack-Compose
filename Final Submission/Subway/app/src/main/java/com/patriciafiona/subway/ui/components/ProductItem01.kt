@@ -1,6 +1,5 @@
 package com.patriciafiona.subway.ui.components
 
-import android.graphics.Paint
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -11,7 +10,6 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Circle
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,21 +23,25 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.patriciafiona.subway.R
 import com.patriciafiona.subway.model.ProductItem
+import com.patriciafiona.subway.navigation.SubwayScreen
 import com.patriciafiona.subway.ui.theme.VividGreen_100
 import com.patriciafiona.subway.utils.Utils.toRupiah
 
 @Composable
-fun ProductItem(product: ProductItem){
+fun ProductItem01(navController: NavController, product: ProductItem){
     Card(
         modifier = Modifier
             .padding(8.dp)
             .height(220.dp)
             .clickable {
                 //Go to detail product
+                navController.navigate(SubwayScreen.DetailScreen.route)
+                navController.currentBackStackEntry?.arguments?.putParcelable("product", product)
             },
         shape = RoundedCornerShape(5),
         ) {

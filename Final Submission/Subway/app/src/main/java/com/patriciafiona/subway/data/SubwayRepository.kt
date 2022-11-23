@@ -1,5 +1,6 @@
 package com.patriciafiona.subway.data
 
+import androidx.compose.runtime.mutableStateListOf
 import com.patriciafiona.subway.data.source.DataSource
 import com.patriciafiona.subway.model.Category
 import com.patriciafiona.subway.model.News
@@ -17,6 +18,7 @@ class SubwayRepository {
     private val categories = mutableListOf<Category>()
     private val news = mutableListOf<News>()
     private val specialSelection = mutableListOf<ProductItem>()
+    private val productsByCategoryId = mutableStateListOf<ProductItem>()
 
     init {
         if (promotions.isEmpty()) {
@@ -60,6 +62,17 @@ class SubwayRepository {
 
     fun getSpecialSelection(): Flow<List<ProductItem>> {
         return flowOf(specialSelection)
+    }
+
+    fun getProductByCategoryId(categoryId: Int):  Flow<List<ProductItem>> {
+        productsByCategoryId.clear()
+        DataSource.products().filter {
+            it.category_id == categoryId
+        }.forEach { product ->
+            productsByCategoryId.add(product)
+        }
+
+        return flowOf(productsByCategoryId)
     }
 
     companion object {

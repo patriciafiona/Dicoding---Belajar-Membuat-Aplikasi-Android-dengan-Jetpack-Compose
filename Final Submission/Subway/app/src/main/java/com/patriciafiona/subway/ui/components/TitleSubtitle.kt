@@ -17,24 +17,34 @@ fun TitleSubtitle(
     title: String, subtitle: String
 ){
     Column(modifier = Modifier.padding(vertical = 10.dp)) {
-        Text(
-            text = title,
-            style = TextStyle(
-                fontWeight = FontWeight.Bold,
-                fontSize = 18.sp,
-                color = VividGreen_100
-            ),
-            modifier = Modifier
-                .padding(start = 20.dp)
-        )
-        Text(
-            text = subtitle,
-            style = TextStyle(
-                fontSize = 12.sp,
-                color = Color.Gray
-            ),
-            modifier = Modifier
-                .padding(start = 20.dp)
-        )
+        Title(title)
+        Subtitle(subtitle)
     }
+}
+
+@Composable
+private fun Subtitle(subtitle: String) {
+    Text(
+        text = subtitle,
+        style = TextStyle(
+            fontSize = 12.sp,
+            color = Color.Gray
+        ),
+        modifier = Modifier
+            .padding(start = 20.dp)
+    )
+}
+
+@Composable
+fun Title(title: String, modifier: Modifier = Modifier.padding(start = 20.dp)) {
+    Text(
+        text = title,
+        style = TextStyle(
+            fontWeight = FontWeight.Bold,
+            fontSize = 18.sp,
+            color = VividGreen_100
+        ),
+        modifier = modifier
+
+    )
 }

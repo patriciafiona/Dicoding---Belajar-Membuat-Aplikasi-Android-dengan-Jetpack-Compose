@@ -30,7 +30,7 @@ import com.patriciafiona.subway.ui.components.*
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun HomeScreen(
-    navController: NavController, modifier: Modifier,
+    navController: NavController,
     viewModel: HomeViewModel = viewModel(
         factory = ViewModelFactory(Injection.provideRepository())
     ),
@@ -51,7 +51,7 @@ fun HomeScreen(
         modifier = Modifier
     ) { innerPadding ->
         Column(
-            modifier = modifier
+            modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState()),
@@ -90,18 +90,18 @@ fun HomeScreen(
                 when (uiState) {
                     is UiState.Loading -> {
                         viewModel.getAllCategories()
-                        Loader(modifier.size(80.dp))
+                        Loader(Modifier.size(80.dp))
                     }
                     is UiState.Success -> {
                         LazyRow(
                             horizontalArrangement = Arrangement.spacedBy(16.dp),
                             contentPadding = PaddingValues(horizontal = 16.dp),
-                            modifier = modifier
+                            modifier = Modifier
                                 .padding(vertical = 10.dp)
                                 .testTag("CategoryList")
                         ) {
                             items(uiState.data) { category ->
-                                CategoryItem(category)
+                                CategoryItem(category, navController)
                             }
                         }
                     }
@@ -114,7 +114,7 @@ fun HomeScreen(
                 when (uiState) {
                     is UiState.Loading -> {
                         viewModel.getSelectedProduct()
-                        Loader(modifier.size(80.dp))
+                        Loader(Modifier.size(80.dp))
                     }
                     is UiState.Success -> {
                         LazyVerticalGrid(
@@ -122,13 +122,14 @@ fun HomeScreen(
                             contentPadding = PaddingValues(8.dp),
                             horizontalArrangement = Arrangement.spacedBy(3.dp),
                             verticalArrangement = Arrangement.spacedBy(3.dp),
-                            modifier = modifier
+                            modifier = Modifier
                                 .height(500.dp)
                                 .testTag("SpecialSelectionList")
                         ) {
                             items(uiState.data) { data ->
-                                ProductItem(
-                                    product = data
+                                ProductItem01(
+                                    product = data,
+                                     navController = navController
                                 )
                             }
                         }
@@ -143,13 +144,13 @@ fun HomeScreen(
                 when (uiState) {
                     is UiState.Loading -> {
                         viewModel.getNews()
-                        Loader(modifier.size(80.dp))
+                        Loader(Modifier.size(80.dp))
                     }
                     is UiState.Success -> {
                         LazyColumn(
                             verticalArrangement = Arrangement.spacedBy(16.dp),
                             contentPadding = PaddingValues(horizontal = 16.dp),
-                            modifier = modifier
+                            modifier = Modifier
                                 .height(500.dp)
                                 .fillMaxWidth()
                                 .padding(vertical = 10.dp)

@@ -5,4 +5,5 @@ sealed class SubwayScreen(val route: String){
     object DetailScreen: SubwayScreen("detail_screen")
     object OrderScreen: SubwayScreen("order_screen")
     object ProfileScreen: SubwayScreen("profile_screen")
+    object CategoryScreen: SubwayScreen("category_screen")
 }

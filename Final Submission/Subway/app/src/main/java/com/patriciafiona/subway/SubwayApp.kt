@@ -1,29 +1,18 @@
 package com.patriciafiona.subway
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.*
-import androidx.compose.material.SnackbarDefaults.backgroundColor
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import com.patriciafiona.subway.navigation.NavigationBuilder
-import com.patriciafiona.subway.navigation.SubwayScreen
+import com.patriciafiona.subway.ui.theme.SubwayTheme
 
-
-@Composable
-fun SubwayApp() {
-    NavigationBuilder(
-        modifier = Modifier
-    )
+class SubwayApp : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            SubwayTheme {
+                NavigationBuilder()
+            }
+        }
+    }
 }

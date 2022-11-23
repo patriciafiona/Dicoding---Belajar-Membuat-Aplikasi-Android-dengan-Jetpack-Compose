@@ -1,5 +1,9 @@
 package com.patriciafiona.subway.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class ProductItem(
     val id: Long,
     val image_url: String,
@@ -7,4 +11,4 @@ data class ProductItem(
     val price: Double,
     val category_id: Int,
     val description: String
-)
+) : Parcelable

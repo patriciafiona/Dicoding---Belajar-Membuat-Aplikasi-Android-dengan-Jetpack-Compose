@@ -39,8 +39,7 @@ import com.patriciafiona.subway.ui.theme.VividGreen_500
 
 @Composable
 fun ProfileScreen(
-    navController: NavController,
-    modifier: Modifier
+    navController: NavController
 ) {
     val isQuickLogin =  remember{
         mutableStateOf(false)
@@ -49,7 +48,7 @@ fun ProfileScreen(
         topBar = { TopBackBar(navController = navController, currentPage = "My Profile") }
     ) { innerPadding ->
         Column(
-            modifier = modifier
+            modifier = Modifier
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
         ) {
@@ -203,5 +202,5 @@ private fun UserProfile() {
 @Composable
 fun ProfileScreenPreview(){
     val navController = rememberNavController()
-    ProfileScreen(navController, Modifier)
+    ProfileScreen(navController)
 }
