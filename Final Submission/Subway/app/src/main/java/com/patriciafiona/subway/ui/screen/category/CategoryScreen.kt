@@ -31,10 +31,7 @@ import androidx.navigation.NavController
 import com.patriciafiona.subway.di.Injection
 import com.patriciafiona.subway.ui.ViewModelFactory
 import com.patriciafiona.subway.ui.common.UiState
-import com.patriciafiona.subway.ui.components.Carousel
-import com.patriciafiona.subway.ui.components.DotsIndicator
-import com.patriciafiona.subway.ui.components.Loader
-import com.patriciafiona.subway.ui.components.ProductItem02
+import com.patriciafiona.subway.ui.components.*
 import com.patriciafiona.subway.ui.screen.home.HomeViewModel
 import com.patriciafiona.subway.ui.theme.VividGreen_100
 
@@ -56,7 +53,7 @@ fun CategoryScreen(
             .fillMaxWidth(),
          verticalArrangement = Arrangement.Top,
     ){
-        CustomTopNavigationBar(navController)
+        CustomTopNavigationBar(title= "Category", navController = navController)
 
         //Chips
         viewModel.categoriesUiState.collectAsState(initial = UiState.Loading).value.let { uiState ->
@@ -137,31 +134,6 @@ fun CategoryScreen(
                 }
                 is UiState.Error -> {}
             }
-        }
-    }
-}
-
-@Composable
-private fun CustomTopNavigationBar(navController: NavController) {
-    IconButton(
-        onClick = {
-            navController.navigateUp()
-        },
-         modifier = Modifier.padding(16.dp)
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back Button")
-
-            Text(
-                text = "Category",
-                style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 18.sp),
-                modifier = Modifier
-                    .padding(start = 8.dp)
-                    .weight(1f)
-            )
         }
     }
 }

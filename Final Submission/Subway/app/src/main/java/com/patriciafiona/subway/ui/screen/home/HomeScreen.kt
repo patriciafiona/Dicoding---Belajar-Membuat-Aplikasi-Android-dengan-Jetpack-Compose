@@ -41,7 +41,7 @@ fun HomeScreen(
         topBar = {
             TopHomeBar(
                 goToCart = {
-                    //
+                    navController.navigate(SubwayScreen.CartScreen.route)
                 },
                 goToDetail = {
                     navController.navigate(SubwayScreen.ProfileScreen.route)

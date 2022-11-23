@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.patriciafiona.subway.model.ProductItem
+import com.patriciafiona.subway.ui.screen.cart.CartScreen
 import com.patriciafiona.subway.ui.screen.category.CategoryScreen
 import com.patriciafiona.subway.ui.screen.detail.DetailScreen
 import com.patriciafiona.subway.ui.screen.home.HomeScreen
@@ -35,6 +36,9 @@ fun NavigationBuilder() {
             if (selectedCategoryId != null) {
                 CategoryScreen(navController = navigationController, selectedCategoryId)
             }
+        }
+        composable(route = SubwayScreen.CartScreen.route){
+            CartScreen(navController = navigationController)
         }
     }
 }

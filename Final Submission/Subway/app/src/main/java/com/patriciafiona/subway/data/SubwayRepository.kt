@@ -18,7 +18,8 @@ class SubwayRepository {
     private val categories = mutableListOf<Category>()
     private val news = mutableListOf<News>()
     private val specialSelection = mutableListOf<ProductItem>()
-    private val productsByCategoryId = mutableStateListOf<ProductItem>()
+    private val productsByCategoryId = mutableListOf<ProductItem>()
+    private val orders = mutableListOf<OrderItem>()
 
     init {
         if (promotions.isEmpty()) {
@@ -73,6 +74,48 @@ class SubwayRepository {
         }
 
         return flowOf(productsByCategoryId)
+    }
+
+    fun addProductToCart(product: ProductItem, total: Int){
+        orders.add(
+            OrderItem(
+                item = product,
+                count = total
+            )
+        )
+    }
+
+    fun updateProductInCart(productId: Long, total: Int): Flow<Boolean>{
+        val index = orders.indexOfFirst { it.item.id == productId }
+        val result = if (index >= 0) {
+            val order = orders[index]
+            orders[index] = order.copy(item = order.item, count = total)
+            true
+        } else {
+            false
+        }
+        return flowOf(result)
+    }
+
+    fun removeProductFromCart(productId: Long): Flow<Boolean>{
+        val index = orders.indexOfFirst { it.item.id == productId }
+        val result = if (index >= 0) {
+            orders.removeAt(index)
+            true
+        } else {
+            false
+        }
+        return flowOf(result)
+    }
+
+    fun getAllProductInCart(): Flow<List<OrderItem>>{
+        return flowOf(orders)
+    }
+
+    fun getOrderRewardById(productId: Long): OrderItem {
+        return orders.first {
+            it.item.id == productId
+        }
     }
 
     companion object {
