@@ -47,7 +47,7 @@ fun TopHomeBar(
                 IconButton(onClick = goToDetail ) {
                     Icon(
                         imageVector = Icons.Default.Person,
-                        contentDescription = "Person Profile"
+                        contentDescription = "about_page"
                     )
                 }
             }

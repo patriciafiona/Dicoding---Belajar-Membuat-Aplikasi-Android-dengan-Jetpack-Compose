@@ -99,7 +99,8 @@ object DataSource {
                     "Kombinasi kesegaran sempurna dari selada, tomat, paprika hijau, bawang Bombay dan juga pilihan saus mu yang disajikan dengan roti yang baru dipanggang. Sungguh merupakan sandwich yang nikmat dan renyah!",
             image_url = "https://www.subway.co.id/wp-content/uploads/2021/08/veggie-1.png",
             category_id = 1,
-            price = 25000.0
+            price = 25000.0,
+            web_url = "https://www.subway.co.id/product/veggie-delite/"
         ),
         ProductItem(
             id = 2,
@@ -109,7 +110,8 @@ object DataSource {
                     "Ini dia menu yang buat hidup mu semakin berwarna! Spicy Italian terdiri dari pepperoni dan irisan salami yang di sajikan dengan roti segar yang baru dipanggang setiap hari. Tambahkan juga pelengkap lainnya sesuai selera mu.",
             image_url = "https://www.subway.co.id/wp-content/uploads/2021/08/spicy-italian-front.png",
             category_id = 1,
-            price = 45000.0
+            price = 45000.0,
+             web_url = "https://www.subway.co.id/product/spicy-italian/"
         ),
         ProductItem(
             id = 3,
@@ -119,7 +121,8 @@ object DataSource {
                     "Hidangan khas Asia, dengan potongan daging ayam lembut dibalut dengan saus teriyaki lezat, disajikan dengan sayur segar dan saus pilihanmu diatas roti yang dipanggang setiap hari nya.",
             image_url = "https://www.subway.co.id/wp-content/uploads/2021/08/chicken-teriyaki-front-e1633678475910.png",
             category_id = 1,
-            price = 37500.0
+            price = 37500.0,
+             web_url = "https://www.subway.co.id/product/chicken-teriyaki/"
         ),
         ProductItem(
             id = 4,
@@ -129,7 +132,8 @@ object DataSource {
                     "Untuk yang lebih menyukai irisan tipis daging ayam yang gurih dan lembut, disajikan dengan sayur segar dan saus pilihanmu diatas roti yang dipanggang setiap hari nya.",
             image_url = "https://www.subway.co.id/wp-content/uploads/2021/08/ham-front.png",
             category_id = 1,
-            price = 32000.0
+            price = 32000.0,
+             web_url = "https://www.subway.co.id/product/chicken-ham/"
         ),
         ProductItem(
             id = 5,
@@ -146,7 +150,8 @@ object DataSource {
                     "",
             image_url = "https://www.subway.co.id/wp-content/uploads/2021/08/tuna-front.png",
             category_id = 1,
-            price = 37500.0
+            price = 37500.0,
+            web_url = "https://www.subway.co.id/product/tuna_mayo/"
         ),
         ProductItem(
             id = 6,
@@ -161,7 +166,8 @@ object DataSource {
                     "",
             image_url = "https://www.subway.co.id/wp-content/uploads/2021/08/Italian-BMT-Front.png",
             category_id = 1,
-            price = 45000.0
+            price = 45000.0,
+            web_url = "https://www.subway.co.id/product/italian-b-m-t/"
         ),
         ProductItem(
             id = 7,
@@ -174,7 +180,8 @@ object DataSource {
                     "",
             image_url = "https://www.subway.co.id/wp-content/uploads/2021/08/egg-mayo.png",
             category_id = 1,
-            price = 32000.0
+            price = 32000.0,
+             web_url = "https://www.subway.co.id/product/egg-mayo/"
         ),
         ProductItem(
             id = 8,
@@ -191,7 +198,8 @@ object DataSource {
                     "",
             image_url = "https://www.subway.co.id/wp-content/uploads/2021/08/steak_cheese-front.png",
             category_id = 1,
-            price = 57000.0
+            price = 57000.0,
+            web_url = "https://www.subway.co.id/product/steak-cheese/"
         ),
         ProductItem(
             id = 9,
@@ -206,7 +214,8 @@ object DataSource {
                     "",
             image_url = "https://www.subway.co.id/wp-content/uploads/2021/08/Untitled-design-2.png",
             category_id = 1,
-            price = 37500.0
+            price = 37500.0,
+             web_url = "https://www.subway.co.id/product/bbq-chicken/"
         ),
         ProductItem(
             id = 10,
@@ -219,7 +228,8 @@ object DataSource {
                     "",
             image_url = "https://www.subway.co.id/wp-content/uploads/2021/08/roast-chicken-front.png",
             category_id = 1,
-            price = 37500.0
+            price = 37500.0,
+             web_url = "https://www.subway.co.id/product/roast-chicken/"
         ),
         ProductItem(
             id = 11,
@@ -232,7 +242,8 @@ object DataSource {
                     "",
             image_url = "https://www.subway.co.id/wp-content/uploads/2022/01/Roast-Beef.png",
             category_id = 1,
-            price = 57000.0
+            price = 57000.0,
+             web_url = "https://www.subway.co.id/product/roast-beef/"
         ),
         ProductItem(
             id = 12,
@@ -243,7 +254,8 @@ object DataSource {
                     "",
             image_url = "https://www.subway.co.id/wp-content/uploads/2022/10/Shrimp-Avocado-1.png",
             category_id = 1,
-            price = 57000.0
+            price = 57000.0,
+             web_url = "https://www.subway.co.id/product/shrimp-avocado/"
         ),
         ProductItem(
             id = 13,
@@ -256,7 +268,8 @@ object DataSource {
                     "",
             image_url = "https://www.subway.co.id/wp-content/uploads/2022/01/Meatball-Marinara-2.png",
             category_id = 1,
-            price = 57000.0
+            price = 57000.0,
+             web_url = "https://www.subway.co.id/product/meatball-marinara/"
         ),
         ProductItem(
             id = 14,
@@ -271,7 +284,8 @@ object DataSource {
                     "",
             image_url = "https://www.subway.co.id/wp-content/uploads/2021/08/Chicken-Ham-Egg.png",
             category_id = 2,
-            price = 27000.0
+            price = 27000.0,
+             web_url = "https://www.subway.co.id/product/chicken-slice-egg/"
         ),
         ProductItem(
             id = 15,
@@ -286,7 +300,8 @@ object DataSource {
                     "",
             image_url = "https://www.subway.co.id/wp-content/uploads/2021/08/Tuna-Egg.png",
             category_id = 2,
-            price = 35000.0
+            price = 35000.0,
+             web_url = "https://www.subway.co.id/product/tuna-egg/"
         ),
         ProductItem(
             id = 16,
@@ -302,7 +317,8 @@ object DataSource {
                     "",
             image_url = "https://www.subway.co.id/wp-content/uploads/2021/08/Cheese-Egg.png",
             category_id = 2,
-            price = 24000.0
+            price = 24000.0,
+             web_url = "https://www.subway.co.id/product/cheese-egg/"
         ),
         ProductItem(
             id = 17,
@@ -317,7 +333,8 @@ object DataSource {
                     "",
             image_url = "https://www.subway.co.id/wp-content/uploads/2021/08/Breakfast-Strip-Egg.png",
             category_id = 2,
-            price = 27000.0
+            price = 27000.0,
+             web_url = "https://www.subway.co.id/product/breakfast-strip-egg/"
         ),
         ProductItem(
             id = 18,
@@ -330,7 +347,8 @@ object DataSource {
                     "",
             image_url = "https://www.subway.co.id/wp-content/uploads/2021/08/BBQ_Chicken_wrap_594x334.jpg",
             category_id = 3,
-            price = 40500.0
+            price = 40500.0,
+             web_url = "https://www.subway.co.id/product/bbq-chicken-wraps/"
         ),
         ProductItem(
             id = 19,
@@ -343,7 +361,8 @@ object DataSource {
                     "",
             image_url = "https://www.subway.co.id/wp-content/uploads/2021/08/Chicken_Strip_Wrap_594x334.jpg",
             category_id = 3,
-            price = 35000.0
+            price = 35000.0,
+             web_url = "https://www.subway.co.id/product/chicken-slice-wraps/"
         ),
         ProductItem(
             id = 20,
@@ -356,7 +375,8 @@ object DataSource {
                     "",
             image_url = "https://www.subway.co.id/wp-content/uploads/2021/08/Chicken_Teriyaki_Wrap_594x334.jpg",
             category_id = 3,
-            price = 40500.0
+            price = 40500.0,
+            web_url = "https://www.subway.co.id/product/chicken-teriyaki-wraps/"
         ),
         ProductItem(
             id = 21,
@@ -369,7 +389,8 @@ object DataSource {
                     "",
             image_url = "https://www.subway.co.id/wp-content/uploads/2021/08/Italian_BMT_Wrap_594x334.png",
             category_id = 3,
-            price = 48000.0
+            price = 48000.0,
+            web_url = "https://www.subway.co.id/product/italian-b-m-t-wraps/"
         ),
         ProductItem(
             id = 22,
@@ -384,7 +405,8 @@ object DataSource {
                     "",
             image_url = "https://www.subway.co.id/wp-content/uploads/2021/08/Buffalo_Chicken_Salad_JPEG_594x334.jpg",
             category_id = 4,
-            price = 54500.0
+            price = 54500.0,
+            web_url = "https://www.subway.co.id/product/bbq-chicken-salad/"
         ),
         ProductItem(
             id = 23,
@@ -399,7 +421,8 @@ object DataSource {
                     "",
             image_url = "https://www.subway.co.id/wp-content/uploads/2021/08/Chicken_Roasted_Salad_594x334.jpg",
             category_id = 4,
-            price = 49000.0
+            price = 49000.0,
+            web_url = "https://www.subway.co.id/product/chicken-slice-salad/"
         ),
         ProductItem(
             id = 24,
@@ -414,7 +437,8 @@ object DataSource {
                     "",
             image_url = "https://www.subway.co.id/wp-content/uploads/2021/08/Chicken_Teriyaki_salad_594x334.jpg",
             category_id = 4,
-            price = 49000.0
+            price = 49000.0,
+            web_url = "https://www.subway.co.id/product/chicken-teriyaki-salad/"
         ),
         ProductItem(
             id = 25,
@@ -429,7 +453,8 @@ object DataSource {
                     "",
             image_url = "https://www.subway.co.id/wp-content/uploads/2021/08/Italian_BMT_Salad_594x334.jpg",
             category_id = 4,
-            price = 62000.0
+            price = 62000.0,
+            web_url = "https://www.subway.co.id/product/italian-b-m-t-salad/"
         ),
         ProductItem(
             id = 26,
@@ -444,7 +469,8 @@ object DataSource {
                     "",
             image_url = "https://www.subway.co.id/wp-content/uploads/2021/08/Chipotle_Steak_Melt_Salads_594x334.jpg",
             category_id = 4,
-            price = 74000.0
+            price = 74000.0,
+            web_url = "https://www.subway.co.id/product/steak_cheese_salad/"
         ),
         ProductItem(
             id = 27,
@@ -458,7 +484,8 @@ object DataSource {
                     "",
             image_url = "https://www.subway.co.id/wp-content/uploads/2021/08/png-transparent-oatmeal-raisin-cookies-chocolate-chip-cookie-peanut-butter-cookie-schmackary-s-baking-biscuit.png",
             category_id = 5,
-            price = 19500.0
+            price = 19500.0,
+            web_url = "https://www.subway.co.id/product/oatmeal-raisin-cookies/"
         ),
         ProductItem(
             id = 28,
@@ -472,7 +499,8 @@ object DataSource {
                     "",
             image_url = "https://www.subway.co.id/wp-content/uploads/2021/08/RPLC-chocolatechipcookie_PR_PR-1.png",
             category_id = 5,
-            price = 19500.0
+            price = 19500.0,
+            web_url = "https://www.subway.co.id/product/chocolate-chip-cookie/"
         ),
         ProductItem(
             id = 29,
@@ -486,7 +514,8 @@ object DataSource {
                     "",
             image_url = "https://www.subway.co.id/wp-content/uploads/2021/08/RPLC-doublechocolatechipcookie-1.png",
             category_id = 5,
-            price = 19500.0
+            price = 19500.0,
+            web_url = "https://www.subway.co.id/product/double-chocolate-chip-cookie/"
         ),
         ProductItem(
             id = 30,
@@ -500,7 +529,8 @@ object DataSource {
                     "",
             image_url = "https://www.subway.co.id/wp-content/uploads/2021/08/Chicken-Ham-_-Cheese-Toastie.png",
             category_id = 5,
-            price = 17500.0
+            price = 17500.0,
+             web_url = "https://www.subway.co.id/product/chicken-slice-cheese/"
         ),
         ProductItem(
             id = 31,
@@ -514,7 +544,8 @@ object DataSource {
                     "",
             image_url = "https://www.subway.co.id/wp-content/uploads/2021/09/Egg-Mayo-Toastie.png",
             category_id = 5,
-            price = 17500.0
+            price = 17500.0,
+            web_url = "https://www.subway.co.id/product/egg-mayo-toasty/"
         ),
         ProductItem(
             id = 32,
@@ -529,7 +560,8 @@ object DataSource {
                     "",
             image_url = "https://www.subway.co.id/wp-content/uploads/2021/08/mushroom-soup.png",
             category_id = 5,
-            price = 29500.0
+            price = 29500.0,
+            web_url = "https://www.subway.co.id/product/mushroom-soup/"
         ),
         ProductItem(
             id = 33,
@@ -544,7 +576,8 @@ object DataSource {
                     "",
             image_url = "https://www.subway.co.id/wp-content/uploads/2021/08/Aqua-300ml.png",
             category_id = 6,
-            price = 9000.0
+            price = 9000.0,
+            web_url = "https://www.subway.co.id/product/aqua-300ml/"
         ),
         ProductItem(
             id = 34,
@@ -559,7 +592,8 @@ object DataSource {
                     "",
             image_url = "https://www.subway.co.id/wp-content/uploads/2021/09/carbonated-drinks.png",
             category_id = 6,
-            price = 19000.0
+            price = 19000.0,
+            web_url = "https://www.subway.co.id/product/carbonated-drinks/"
         ),
         ProductItem(
             id = 35,
@@ -574,7 +608,8 @@ object DataSource {
                     "",
             image_url = "https://www.subway.co.id/wp-content/uploads/2021/08/coffee-1.png",
             category_id = 6,
-            price = 25000.0
+            price = 25000.0,
+            web_url = "https://www.subway.co.id/product/coffee/"
         ),
         ProductItem(
             id = 36,
@@ -589,7 +624,8 @@ object DataSource {
                     "",
             image_url = "https://www.subway.co.id/wp-content/uploads/2021/08/minutemadepulpyorange.png",
             category_id = 6,
-            price = 17000.0
+            price = 17000.0,
+            web_url = "https://www.subway.co.id/product/minute-maid-pulpy-orange/"
         ),
     )
 }

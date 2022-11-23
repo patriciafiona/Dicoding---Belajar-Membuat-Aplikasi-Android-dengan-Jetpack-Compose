@@ -1,6 +1,7 @@
 package com.patriciafiona.subway.ui.screen.detail
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -21,9 +22,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -35,6 +39,7 @@ import com.patriciafiona.subway.ui.components.Title
 import com.patriciafiona.subway.ui.theme.Marigold_100
 import com.patriciafiona.subway.ui.theme.VividGreen_100
 import com.patriciafiona.subway.ui.theme.VividGreen_300
+import com.patriciafiona.subway.ui.theme.VividGreen_500
 import com.patriciafiona.subway.utils.Utils.toRupiah
 
 @Composable
@@ -56,6 +61,7 @@ fun DetailScreen(navController: NavController, product: ProductItem) {
         ) {
             TopSection(product)
             DescriptionSection(product)
+            WebsiteSection(product.web_url)
             AddRemoveButton(totalOrder)
         }
 
@@ -70,6 +76,27 @@ fun DetailScreen(navController: NavController, product: ProductItem) {
             )
         }
     }
+}
+
+@Composable
+fun WebsiteSection(webUrl: String) {
+    val uriHandler = LocalUriHandler.current
+
+    Title(title = "Website", modifier = Modifier.padding(top = 16.dp))
+
+    Text(
+        webUrl,
+        style = TextStyle(
+            fontSize = 14.sp,
+            textDecoration = TextDecoration.Underline,
+            color = VividGreen_300
+        ),
+         modifier = Modifier.clickable {
+             uriHandler.openUri(webUrl)
+         },
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis,
+    )
 }
 
 @Composable

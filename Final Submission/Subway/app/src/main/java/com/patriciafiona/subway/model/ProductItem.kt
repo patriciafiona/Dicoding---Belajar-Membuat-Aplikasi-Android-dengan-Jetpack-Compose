@@ -10,5 +10,6 @@ data class ProductItem(
     val title: String,
     val price: Double,
     val category_id: Int,
-    val description: String
+    val description: String,
+    val web_url: String
 ) : Parcelable
