@@ -23,6 +23,8 @@ class SubwayRepository {
     private val productsByCategoryId = mutableListOf<ProductItem>()
     private val orders = mutableListOf<OrderItem>()
 
+    private var myFavorites = mutableListOf<Long>()
+
     private val isQuickLogin = mutableStateOf(false)
 
     init {
@@ -59,6 +61,18 @@ class SubwayRepository {
 
     fun updateIsQuickLogin(newValue: Boolean){
         isQuickLogin.value = newValue
+    }
+
+    fun getMyFavorite(): Flow<List<Long>>{
+        return flowOf(myFavorites)
+    }
+
+    fun addToFavorite(productId: Long){
+        myFavorites.add(productId)
+    }
+
+    fun removeFromMyFavorite(productId: Long){
+        myFavorites.remove(productId)
     }
 
     fun getAllPromotions(): Flow<List<Int>> {

@@ -1,5 +1,6 @@
 package com.patriciafiona.subway.ui.components
 
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -10,6 +11,7 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Circle
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -29,11 +31,19 @@ import coil.request.ImageRequest
 import com.patriciafiona.subway.R
 import com.patriciafiona.subway.model.ProductItem
 import com.patriciafiona.subway.navigation.SubwayScreen
+import com.patriciafiona.subway.ui.screen.home.HomeViewModel
 import com.patriciafiona.subway.ui.theme.VividGreen_100
 import com.patriciafiona.subway.utils.Utils.toRupiah
 
 @Composable
-fun ProductItem01(navController: NavController, product: ProductItem){
+fun ProductItem01(
+    navController: NavController,
+    product: ProductItem,
+    viewModel: HomeViewModel,
+    listOfFavorites: ArrayList<Long>
+){
+    val context = LocalContext.current
+
     Card(
         modifier = Modifier
             .padding(8.dp)
@@ -68,7 +78,25 @@ fun ProductItem01(navController: NavController, product: ProductItem){
 
                 IconButton(
                     modifier = Modifier.align(Alignment.TopEnd),
-                    onClick = {}
+                    onClick = {
+                        if(listOfFavorites.contains(product.id)){
+                            //remove
+                            viewModel.removeFromFavorite(product.id)
+                            Toast.makeText(
+                                context,
+                                "Remove from My Favorites",
+                                 Toast.LENGTH_SHORT
+                            ).show()
+                        }else{
+                            //add
+                            viewModel.addToFavorite(product.id)
+                            Toast.makeText(
+                                context,
+                                "Add from My Favorites",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
                 ) {
                     Card(
                         modifier = Modifier
@@ -78,12 +106,21 @@ fun ProductItem01(navController: NavController, product: ProductItem){
                         Box(
                             modifier = Modifier.size(15.dp)
                         ) {
-                            Icon(
-                                imageVector = Icons.Default.FavoriteBorder,
-                                contentDescription = "Favorite Icon",
-                                tint = Color.LightGray,
-                                modifier = Modifier.align(Alignment.Center)
-                            )
+                            if (listOfFavorites.contains(product.id)){
+                                Icon(
+                                    imageVector = Icons.Filled.Favorite,
+                                    contentDescription = "Favorite Icon",
+                                    tint = Color.Red,
+                                    modifier = Modifier.align(Alignment.Center)
+                                )
+                            }else{
+                                Icon(
+                                    imageVector = Icons.Default.FavoriteBorder,
+                                    contentDescription = "Unfavorite Icon",
+                                    tint = Color.LightGray,
+                                    modifier = Modifier.align(Alignment.Center)
+                                )
+                            }
                         }
                     }
                 }

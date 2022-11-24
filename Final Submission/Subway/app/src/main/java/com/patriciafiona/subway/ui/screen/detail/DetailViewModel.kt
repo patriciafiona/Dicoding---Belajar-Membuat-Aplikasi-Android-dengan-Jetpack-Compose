@@ -29,6 +29,34 @@ class DetailViewModel(
     val removeUiState: StateFlow<UiState<Boolean>>
         get() = _removeUiState
 
+    private val _favoriteUiState: MutableStateFlow<UiState<List<Long>>> = MutableStateFlow(
+        UiState.Loading)
+    val favoriteUiState: StateFlow<UiState<List<Long>>>
+        get() = _favoriteUiState
+
+    fun addToFavorite(productId: Long) {
+        viewModelScope.launch {
+            repository.addToFavorite(productId)
+        }
+    }
+
+    fun removeFromFavorite(productId: Long){
+        viewModelScope.launch {
+            repository.removeFromMyFavorite(productId)
+        }
+    }
+
+    fun getMyFavorites() {
+        viewModelScope.launch {
+            repository.getMyFavorite()
+                .catch {
+                    _favoriteUiState.value = UiState.Error(it.message.toString())
+                }
+                .collect { items ->
+                    _favoriteUiState.value = UiState.Success(items)
+                }
+        }
+    }
 
     fun addProductToCart(
         product: ProductItem,

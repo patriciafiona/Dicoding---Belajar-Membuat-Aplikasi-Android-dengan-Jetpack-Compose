@@ -1,5 +1,6 @@
 package com.patriciafiona.subway.ui.screen.detail
 
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -9,14 +10,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.FavoriteBorder
-import androidx.compose.material.icons.filled.Remove
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.material.icons.filled.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -38,6 +33,7 @@ import com.patriciafiona.subway.di.Injection
 import com.patriciafiona.subway.model.ProductItem
 import com.patriciafiona.subway.navigation.SubwayScreen
 import com.patriciafiona.subway.ui.ViewModelFactory
+import com.patriciafiona.subway.ui.common.UiState
 import com.patriciafiona.subway.ui.components.AddRemoveButton
 import com.patriciafiona.subway.ui.components.Title
 import com.patriciafiona.subway.ui.screen.cart.CartViewModel
@@ -55,15 +51,34 @@ fun DetailScreen(
         factory = ViewModelFactory(Injection.provideRepository())
     )
 ) {
-
+    //Total order
     val totalOrder = remember{ mutableStateOf(1) }
+
+    //list favorites
+    val listOfFavorite: MutableState<ArrayList<Long>> = remember{ mutableStateOf(arrayListOf()) }
+    viewModel.favoriteUiState.collectAsState(initial = UiState.Loading).value.let { uiState ->
+        when (uiState) {
+            is UiState.Loading -> {
+                viewModel.getMyFavorites()
+            }
+            is UiState.Success -> {
+                listOfFavorite.value = uiState.data as ArrayList<Long>
+            }
+            is UiState.Error -> {}
+        }
+    }
 
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
     ) {
-        CustomTopNavigationBar(navController)
+        CustomTopNavigationBar(
+            navController,
+            viewModel = viewModel,
+            listOfFavorites = listOfFavorite,
+            productId = product.id
+        )
 
         Column(
             modifier = Modifier
@@ -124,7 +139,14 @@ fun WebsiteSection(webUrl: String) {
 }
 
 @Composable
-private fun CustomTopNavigationBar(navController: NavController) {
+private fun CustomTopNavigationBar(
+    navController: NavController,
+    listOfFavorites: MutableState<ArrayList<Long>>,
+    productId: Long,
+     viewModel: DetailViewModel
+) {
+    val context = LocalContext.current
+
     IconButton(onClick = {
         navController.navigateUp()
     }) {
@@ -143,7 +165,25 @@ private fun CustomTopNavigationBar(navController: NavController) {
             )
 
             IconButton(
-                onClick = {}
+                onClick = {
+                    if(listOfFavorites.value.contains(productId)){
+                        //remove
+                        viewModel.removeFromFavorite(productId)
+                        Toast.makeText(
+                            context,
+                            "Remove from My Favorites",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }else{
+                        //add
+                        viewModel.addToFavorite(productId)
+                        Toast.makeText(
+                            context,
+                            "Add from My Favorites",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
             ) {
                 Card(
                     modifier = Modifier
@@ -153,12 +193,21 @@ private fun CustomTopNavigationBar(navController: NavController) {
                     Box(
                         modifier = Modifier.size(15.dp)
                     ) {
-                        Icon(
-                            imageVector = Icons.Default.FavoriteBorder,
-                            contentDescription = "Favorite Icon",
-                            tint = Color.LightGray,
-                            modifier = Modifier.align(Alignment.Center)
-                        )
+                        if (listOfFavorites.value.contains(productId)){
+                            Icon(
+                                imageVector = Icons.Filled.Favorite,
+                                contentDescription = "Favorite Icon",
+                                tint = Color.Red,
+                                modifier = Modifier.align(Alignment.Center)
+                            )
+                        }else{
+                            Icon(
+                                imageVector = Icons.Default.FavoriteBorder,
+                                contentDescription = "Unfavorite Icon",
+                                tint = Color.LightGray,
+                                modifier = Modifier.align(Alignment.Center)
+                            )
+                        }
                     }
                 }
             }

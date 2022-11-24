@@ -141,27 +141,41 @@ fun HomeScreen(
             }
 
             TitleSubtitle(title = "Special selections", subtitle = "The best recommendation for our foods/drinks")
-            viewModel.selectedProductUiState.collectAsState(initial = UiState.Loading).value.let { uiState ->
+            viewModel.favoriteUiState.collectAsState(initial = UiState.Loading).value.let { uiState ->
                 when (uiState) {
                     is UiState.Loading -> {
-                        viewModel.getSelectedProduct()
-                        Loader(Modifier.size(80.dp))
+                        viewModel.getMyFavorites()
                     }
                     is UiState.Success -> {
-                        LazyVerticalGrid(
-                            columns = GridCells.Adaptive(170.dp),
-                            contentPadding = PaddingValues(8.dp),
-                            horizontalArrangement = Arrangement.spacedBy(3.dp),
-                            verticalArrangement = Arrangement.spacedBy(3.dp),
-                            modifier = Modifier
-                                .height(500.dp)
-                                .testTag("SpecialSelectionList")
-                        ) {
-                            items(uiState.data) { data ->
-                                ProductItem01(
-                                    product = data,
-                                     navController = navController
-                                )
+                        val listOfFavorite = uiState.data
+
+                        viewModel.selectedProductUiState.collectAsState(initial = UiState.Loading).value.let { uiState ->
+                            when (uiState) {
+                                is UiState.Loading -> {
+                                    viewModel.getSelectedProduct()
+                                    Loader(Modifier.size(80.dp))
+                                }
+                                is UiState.Success -> {
+                                    LazyVerticalGrid(
+                                        columns = GridCells.Adaptive(170.dp),
+                                        contentPadding = PaddingValues(8.dp),
+                                        horizontalArrangement = Arrangement.spacedBy(3.dp),
+                                        verticalArrangement = Arrangement.spacedBy(3.dp),
+                                        modifier = Modifier
+                                            .height(500.dp)
+                                            .testTag("SpecialSelectionList")
+                                    ) {
+                                        items(uiState.data) { data ->
+                                            ProductItem01(
+                                                product = data,
+                                                navController = navController,
+                                                viewModel = viewModel,
+                                                listOfFavorites = listOfFavorite as ArrayList<Long>
+                                            )
+                                        }
+                                    }
+                                }
+                                is UiState.Error -> {}
                             }
                         }
                     }
