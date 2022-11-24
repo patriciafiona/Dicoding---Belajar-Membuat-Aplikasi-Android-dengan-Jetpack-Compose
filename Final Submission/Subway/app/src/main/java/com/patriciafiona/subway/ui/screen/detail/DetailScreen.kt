@@ -30,11 +30,13 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.patriciafiona.subway.R
 import com.patriciafiona.subway.di.Injection
+import com.patriciafiona.subway.model.OrderItem
 import com.patriciafiona.subway.model.ProductItem
 import com.patriciafiona.subway.navigation.SubwayScreen
 import com.patriciafiona.subway.ui.ViewModelFactory
 import com.patriciafiona.subway.ui.common.UiState
 import com.patriciafiona.subway.ui.components.AddRemoveButton
+import com.patriciafiona.subway.ui.components.CustomTopNavigationBar
 import com.patriciafiona.subway.ui.components.Title
 import com.patriciafiona.subway.ui.screen.cart.CartViewModel
 import com.patriciafiona.subway.ui.theme.Marigold_100
@@ -68,6 +70,12 @@ fun DetailScreen(
         }
     }
 
+    //Check product in cart
+    val productInCart: List<OrderItem> = viewModel.getOrderById(productId = product.id)
+    if(productInCart.isNotEmpty()){
+        totalOrder.value = productInCart[0].count
+    }
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -88,31 +96,77 @@ fun DetailScreen(
             TopSection(product)
             DescriptionSection(product)
             WebsiteSection(product.web_url)
+
+
+            //Product already in cart
             AddRemoveButton(
                 totalOrder,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 24.dp)
+                    .padding(vertical = 24.dp),
+                isInCart = productInCart.isNotEmpty()
             )
         }
 
-        Button(
-            onClick = {
-                  //add to cart
-                  viewModel.addProductToCart(
-                      product = product,
-                      total = totalOrder.value
-                  )
-                //go to success screen
-                navController.navigate(SubwayScreen.SuccessAddToCartScreen.route)
-            },
-            modifier = Modifier
-                .fillMaxWidth(),
-            shape = RoundedCornerShape(50)
-        ) {
-            Text(
-                "Add to Order"
-            )
+        if(productInCart.isNotEmpty() && totalOrder.value == 0) {
+            Button(
+                onClick = {
+                    //remove from cart
+                    viewModel.removeProductInCart(product.id)
+
+                    //go to previous page
+                    navController.navigateUp()
+                },
+                modifier = Modifier
+                    .fillMaxWidth(),
+                shape = RoundedCornerShape(50),
+                colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red)
+            ) {
+                Text(
+                    "Remove from cart",
+                     color = Color.White
+                )
+            }
+        }else if(productInCart.isNotEmpty() && totalOrder.value != 0){
+            Button(
+                onClick = {
+                    //update cart
+                    viewModel.updateProductInCart(
+                        productId = product.id,
+                        total = totalOrder.value
+                    )
+                    //go to success screen
+                    navController.navigate(SubwayScreen.SuccessAddToCartScreen.route)
+                },
+                modifier = Modifier
+                    .fillMaxWidth(),
+                shape = RoundedCornerShape(50),
+                colors = ButtonDefaults.buttonColors(backgroundColor = Marigold_100)
+            ) {
+                Text(
+                    "Update Order",
+                    color = VividGreen_100
+                )
+            }
+        }else{
+            Button(
+                onClick = {
+                    //add to cart
+                    viewModel.addProductToCart(
+                        product = product,
+                        total = totalOrder.value
+                    )
+                    //go to success screen
+                    navController.navigate(SubwayScreen.SuccessAddToCartScreen.route)
+                },
+                modifier = Modifier
+                    .fillMaxWidth(),
+                shape = RoundedCornerShape(50)
+            ) {
+                Text(
+                    "Add to Order"
+                )
+            }
         }
     }
 }

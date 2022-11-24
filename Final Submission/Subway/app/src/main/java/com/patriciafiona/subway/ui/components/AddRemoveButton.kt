@@ -22,16 +22,22 @@ import com.patriciafiona.subway.ui.theme.Marigold_100
 import com.patriciafiona.subway.ui.theme.VividGreen_100
 
 @Composable
-fun AddRemoveButton(totalOrder: MutableState<Int>, modifier: Modifier = Modifier) {
+fun AddRemoveButton(totalOrder: MutableState<Int>, modifier: Modifier = Modifier, isInCart: Boolean = false) {
     Row(
         horizontalArrangement = Arrangement.SpaceAround,
         verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier
+        modifier = modifier,
     ) {
         IconButton(
             onClick = {
-                if (totalOrder.value > 1) {
-                    totalOrder.value -= 1
+                if (isInCart){
+                    if (totalOrder.value > 0) {
+                        totalOrder.value -= 1
+                    }
+                }else{
+                    if (totalOrder.value > 1) {
+                        totalOrder.value -= 1
+                    }
                 }
             }
         ) {

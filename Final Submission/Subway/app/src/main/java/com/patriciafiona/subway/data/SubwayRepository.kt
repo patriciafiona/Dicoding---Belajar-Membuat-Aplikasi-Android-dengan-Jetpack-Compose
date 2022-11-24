@@ -148,8 +148,8 @@ class SubwayRepository {
         return flowOf(orders)
     }
 
-    fun getOrderRewardById(productId: Long): OrderItem {
-        return orders.first {
+    fun getOrderById(productId: Long): List<OrderItem> {
+        return orders.filter {
             it.item.id == productId
         }
     }

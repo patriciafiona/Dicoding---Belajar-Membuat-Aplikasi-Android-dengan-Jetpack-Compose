@@ -34,6 +34,10 @@ class DetailViewModel(
     val favoriteUiState: StateFlow<UiState<List<Long>>>
         get() = _favoriteUiState
 
+    fun getOrderById(productId: Long): List<OrderItem>{
+        return repository.getOrderById(productId)
+    }
+
     fun addToFavorite(productId: Long) {
         viewModelScope.launch {
             repository.addToFavorite(productId)
