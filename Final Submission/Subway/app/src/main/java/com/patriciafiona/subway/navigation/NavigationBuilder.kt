@@ -9,7 +9,9 @@ import com.patriciafiona.subway.model.ProductItem
 import com.patriciafiona.subway.ui.screen.cart.CartScreen
 import com.patriciafiona.subway.ui.screen.category.CategoryScreen
 import com.patriciafiona.subway.ui.screen.detail.DetailScreen
+import com.patriciafiona.subway.ui.screen.favorite_status.FavoriteStatus
 import com.patriciafiona.subway.ui.screen.home.HomeScreen
+import com.patriciafiona.subway.ui.screen.my_favorite.MyFavoriteScreen
 import com.patriciafiona.subway.ui.screen.profile.ProfileScreen
 import com.patriciafiona.subway.ui.screen.sucessAddToCart.SuccessAddToCart
 
@@ -48,6 +50,15 @@ fun NavigationBuilder() {
         }
         composable(route = SubwayScreen.SuccessAddToCartScreen.route){
             SuccessAddToCart(navController = navigationController)
+        }
+        composable(route = SubwayScreen.FavoriteStatusScreen.route){ previousBackStackEntry ->
+            val isAdd = previousBackStackEntry.arguments?.getBoolean("isAdd")
+            if (isAdd != null) {
+                FavoriteStatus(navController = navigationController, isAdd = isAdd)
+            }
+        }
+        composable(route = SubwayScreen.MyFavoriteScreen.route){
+            MyFavoriteScreen(navController = navigationController)
         }
     }
 }

@@ -7,4 +7,6 @@ sealed class SubwayScreen(val route: String){
     object ProfileScreen: SubwayScreen("profile_screen")
     object CategoryScreen: SubwayScreen("category_screen")
     object SuccessAddToCartScreen: SubwayScreen("success_add_to_cart_screen")
+    object FavoriteStatusScreen: SubwayScreen("favorite_status_screen")
+    object MyFavoriteScreen: SubwayScreen("my_favorite_screen")
 }

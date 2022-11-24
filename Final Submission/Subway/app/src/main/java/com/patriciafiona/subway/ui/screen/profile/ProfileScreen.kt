@@ -2,12 +2,9 @@ package com.patriciafiona.subway.ui.screen.profile
 
 import android.graphics.drawable.Icon
 import android.icu.text.CaseMap
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -29,6 +26,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.patriciafiona.subway.R
 import com.patriciafiona.subway.di.Injection
+import com.patriciafiona.subway.navigation.SubwayScreen
 import com.patriciafiona.subway.ui.ViewModelFactory
 import com.patriciafiona.subway.ui.common.UiState
 import com.patriciafiona.subway.ui.components.Carousel
@@ -78,21 +76,28 @@ fun ProfileScreen(
 
             TitleSubtitle(title = "Account", subtitle = "All information about your account")
             Column(modifier = Modifier.fillMaxWidth()) {
-                ProfileRowItem(icon = Icons.Default.List, title = "My Orders", additionalDetail = "See ongoing & history")
-                ProfileRowItem(icon = Icons.Default.CreditCard, title = "Payment Methods")
-                ProfileRowItem(icon = Icons.Default.HelpCenter, title = "Help center")
-                ProfileRowItem(icon = Icons.Default.Language, title = "Change Language")
-                ProfileRowItem(icon = Icons.Default.Bookmark, title = "Saved addresses")
-                ProfileRowItem(icon = Icons.Default.Group, title = "Invite friends")
-                ProfileRowItem(icon = Icons.Default.Fingerprint, title = "Quick login", isQuickLogin = isQuickLogin, viewModel = viewModel)
-                ProfileRowItem(icon = Icons.Default.AccountCircle, title = "Manage accounts")
-                ProfileRowItem(icon = Icons.Default.Security, title = "Account safety")
+                ProfileRowItem(icon = Icons.Default.List, title = "My Orders", additionalDetail = "See ongoing & history", navController = navController)
+                ProfileRowItem(
+                    icon = Icons.Default.Favorite,
+                    title = "My Favorites",
+                    additionalDetail = "See likes history",
+                    navigateRoute = SubwayScreen.MyFavoriteScreen.route,
+                    navController = navController
+                )
+                ProfileRowItem(icon = Icons.Default.CreditCard, title = "Payment Methods", navController = navController)
+                ProfileRowItem(icon = Icons.Default.HelpCenter, title = "Help center", navController = navController)
+                ProfileRowItem(icon = Icons.Default.Language, title = "Change Language", navController = navController)
+                ProfileRowItem(icon = Icons.Default.Bookmark, title = "Saved addresses", navController = navController)
+                ProfileRowItem(icon = Icons.Default.Group, title = "Invite friends", navController = navController)
+                ProfileRowItem(icon = Icons.Default.Fingerprint, title = "Quick login", isQuickLogin = isQuickLogin, viewModel = viewModel, navController = navController)
+                ProfileRowItem(icon = Icons.Default.AccountCircle, title = "Manage accounts", navController = navController)
+                ProfileRowItem(icon = Icons.Default.Security, title = "Account safety", navController = navController)
             }
 
             TitleSubtitle(title = "General", subtitle = "General settings access")
             Column(modifier = Modifier.fillMaxWidth()) {
-                ProfileRowItem(icon = Icons.Default.PrivacyTip, title = "Terms & privacy", additionalDetail = "Accepted", isShowBadge = true)
-                ProfileRowItem(icon = Icons.Default.Smartphone, title = "Version", additionalDetail = "v 1.0.0")
+                ProfileRowItem(icon = Icons.Default.PrivacyTip, title = "Terms & privacy", additionalDetail = "Accepted", isShowBadge = true, navController = navController)
+                ProfileRowItem(icon = Icons.Default.Smartphone, title = "Version", additionalDetail = "v 1.0.0", navController = navController)
             }
         }
     }
@@ -106,12 +111,19 @@ fun ProfileRowItem(
     additionalDetail: String? = null,
     isQuickLogin: MutableState<Boolean>? = null,
     isShowBadge: Boolean = false,
-    viewModel: ProfileViewModel? = null
+    viewModel: ProfileViewModel? = null,
+    navigateRoute: String? = null,
+     navController: NavController
 ) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 10.dp),
+            .padding(horizontal = 16.dp, vertical = 10.dp)
+            .clickable {
+                if (!navigateRoute.isNullOrEmpty()) {
+                    navController.navigate(navigateRoute)
+                }
+            },
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically
@@ -154,7 +166,9 @@ fun ProfileRowItem(
                         fontSize = 12.sp,
                         textAlign = TextAlign.End
                     ),
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(end = 3.dp)
                 )
             }
 

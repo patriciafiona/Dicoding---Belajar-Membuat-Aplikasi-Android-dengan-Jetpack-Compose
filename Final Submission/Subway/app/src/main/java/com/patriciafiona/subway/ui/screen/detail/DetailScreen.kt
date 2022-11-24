@@ -169,19 +169,15 @@ private fun CustomTopNavigationBar(
                     if(listOfFavorites.value.contains(productId)){
                         //remove
                         viewModel.removeFromFavorite(productId)
-                        Toast.makeText(
-                            context,
-                            "Remove from My Favorites",
-                            Toast.LENGTH_SHORT
-                        ).show()
+
+                        navController.navigate(SubwayScreen.FavoriteStatusScreen.route)
+                        navController.currentBackStackEntry?.arguments?.putBoolean("isAdd", false)
                     }else{
                         //add
                         viewModel.addToFavorite(productId)
-                        Toast.makeText(
-                            context,
-                            "Add from My Favorites",
-                            Toast.LENGTH_SHORT
-                        ).show()
+
+                        navController.navigate(SubwayScreen.FavoriteStatusScreen.route)
+                        navController.currentBackStackEntry?.arguments?.putBoolean("isAdd", true)
                     }
                 }
             ) {

@@ -7,6 +7,7 @@ import com.patriciafiona.subway.ui.screen.cart.CartViewModel
 import com.patriciafiona.subway.ui.screen.category.CategoryViewModel
 import com.patriciafiona.subway.ui.screen.detail.DetailViewModel
 import com.patriciafiona.subway.ui.screen.home.HomeViewModel
+import com.patriciafiona.subway.ui.screen.my_favorite.MyFavoriteViewModel
 import com.patriciafiona.subway.ui.screen.profile.ProfileViewModel
 
 class ViewModelFactory(private val repository: SubwayRepository) :
@@ -24,6 +25,8 @@ class ViewModelFactory(private val repository: SubwayRepository) :
             return DetailViewModel(repository) as T
         } else if (modelClass.isAssignableFrom(ProfileViewModel::class.java)) {
             return ProfileViewModel(repository) as T
+        } else if (modelClass.isAssignableFrom(MyFavoriteViewModel::class.java)) {
+            return MyFavoriteViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
     }

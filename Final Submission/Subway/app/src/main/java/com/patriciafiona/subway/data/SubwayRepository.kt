@@ -22,10 +22,9 @@ class SubwayRepository {
     private val specialSelection = mutableListOf<ProductItem>()
     private val productsByCategoryId = mutableListOf<ProductItem>()
     private val orders = mutableListOf<OrderItem>()
-
     private var myFavorites = mutableListOf<Long>()
-
     private val isQuickLogin = mutableStateOf(false)
+    private val productsFavorites = mutableListOf<ProductItem>()
 
     init {
         if (promotions.isEmpty()) {
@@ -100,6 +99,17 @@ class SubwayRepository {
         }
 
         return flowOf(productsByCategoryId)
+    }
+
+    fun getProductFavorites():  Flow<List<ProductItem>> {
+        productsFavorites.clear()
+        DataSource.products().filter {
+            myFavorites.contains(it.id)
+        }.forEach { product ->
+            productsFavorites.add(product)
+        }
+
+        return flowOf(productsFavorites)
     }
 
     fun addProductToCart(product: ProductItem, total: Int){
