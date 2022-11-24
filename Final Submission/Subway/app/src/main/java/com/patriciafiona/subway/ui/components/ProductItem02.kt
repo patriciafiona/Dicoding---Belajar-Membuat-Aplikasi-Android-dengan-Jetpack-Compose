@@ -26,7 +26,10 @@ import com.patriciafiona.subway.ui.theme.VividGreen_100
 import com.patriciafiona.subway.utils.Utils.toRupiah
 
 @Composable
-fun ProductItem02(navController: NavController, product: ProductItem){
+fun ProductItem02(
+    navController: NavController,
+    product: ProductItem
+){
     Column(
         modifier = Modifier
             .fillMaxWidth()

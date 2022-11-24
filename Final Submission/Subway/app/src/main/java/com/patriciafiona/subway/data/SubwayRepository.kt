@@ -1,6 +1,8 @@
 package com.patriciafiona.subway.data
 
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import com.patriciafiona.subway.data.source.DataSource
 import com.patriciafiona.subway.model.Category
 import com.patriciafiona.subway.model.News
@@ -20,6 +22,8 @@ class SubwayRepository {
     private val specialSelection = mutableListOf<ProductItem>()
     private val productsByCategoryId = mutableListOf<ProductItem>()
     private val orders = mutableListOf<OrderItem>()
+
+    private val isQuickLogin = mutableStateOf(false)
 
     init {
         if (promotions.isEmpty()) {
@@ -47,6 +51,14 @@ class SubwayRepository {
                 }
             }
         }
+    }
+
+    fun getIsQuickLogin(): Flow<MutableState<Boolean>>{
+        return flowOf(isQuickLogin)
+    }
+
+    fun updateIsQuickLogin(newValue: Boolean){
+        isQuickLogin.value = newValue
     }
 
     fun getAllPromotions(): Flow<List<Int>> {

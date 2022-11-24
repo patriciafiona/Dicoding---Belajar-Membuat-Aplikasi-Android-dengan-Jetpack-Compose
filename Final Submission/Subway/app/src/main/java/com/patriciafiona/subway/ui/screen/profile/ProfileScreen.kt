@@ -11,10 +11,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -31,19 +28,42 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.patriciafiona.subway.R
+import com.patriciafiona.subway.di.Injection
+import com.patriciafiona.subway.ui.ViewModelFactory
+import com.patriciafiona.subway.ui.common.UiState
+import com.patriciafiona.subway.ui.components.Carousel
+import com.patriciafiona.subway.ui.components.DotsIndicator
 import com.patriciafiona.subway.ui.components.TitleSubtitle
 import com.patriciafiona.subway.ui.components.TopBackBar
+import com.patriciafiona.subway.ui.screen.home.HomeViewModel
 import com.patriciafiona.subway.ui.theme.Marigold_300
 import com.patriciafiona.subway.ui.theme.VividGreen_100
 import com.patriciafiona.subway.ui.theme.VividGreen_500
 
 @Composable
 fun ProfileScreen(
-    navController: NavController
+    navController: NavController,
+    viewModel: ProfileViewModel = androidx.lifecycle.viewmodel.compose.viewModel(
+        factory = ViewModelFactory(Injection.provideRepository())
+    ),
 ) {
     val isQuickLogin =  remember{
         mutableStateOf(false)
     }
+
+    //update isQuickLogin from repository
+    viewModel.quickLoginUiState.collectAsState(initial = UiState.Loading).value.let { uiState ->
+        when (uiState) {
+            is UiState.Loading -> {
+                viewModel.getIsQuickLogin()
+            }
+            is UiState.Success -> {
+                isQuickLogin.value = uiState.data.value
+            }
+            is UiState.Error -> {}
+        }
+    }
+
     Scaffold(
         topBar = { TopBackBar(navController = navController, currentPage = "My Profile") }
     ) { innerPadding ->
@@ -64,7 +84,7 @@ fun ProfileScreen(
                 ProfileRowItem(icon = Icons.Default.Language, title = "Change Language")
                 ProfileRowItem(icon = Icons.Default.Bookmark, title = "Saved addresses")
                 ProfileRowItem(icon = Icons.Default.Group, title = "Invite friends")
-                ProfileRowItem(icon = Icons.Default.Fingerprint, title = "Quick login", isQuickLogin = isQuickLogin)
+                ProfileRowItem(icon = Icons.Default.Fingerprint, title = "Quick login", isQuickLogin = isQuickLogin, viewModel = viewModel)
                 ProfileRowItem(icon = Icons.Default.AccountCircle, title = "Manage accounts")
                 ProfileRowItem(icon = Icons.Default.Security, title = "Account safety")
             }
@@ -85,7 +105,8 @@ fun ProfileRowItem(
     title: String,
     additionalDetail: String? = null,
     isQuickLogin: MutableState<Boolean>? = null,
-    isShowBadge: Boolean = false
+    isShowBadge: Boolean = false,
+    viewModel: ProfileViewModel? = null
 ) {
     Column(
         modifier = Modifier
@@ -149,6 +170,7 @@ fun ProfileRowItem(
                     checked = isQuickLogin.value,
                     onCheckedChange = {
                         isQuickLogin.value = !isQuickLogin.value
+                        viewModel?.updateIsQuickLogin(isQuickLogin.value)
                     }
                 )
             }

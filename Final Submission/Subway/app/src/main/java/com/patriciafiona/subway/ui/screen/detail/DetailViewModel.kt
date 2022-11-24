@@ -1,7 +1,5 @@
-package com.patriciafiona.subway.ui.screen.cart
+package com.patriciafiona.subway.ui.screen.detail
 
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.patriciafiona.subway.data.SubwayRepository
@@ -13,7 +11,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
-class CartViewModel(
+class DetailViewModel(
     private val repository: SubwayRepository
 ): ViewModel() {
     private val _productUiState: MutableStateFlow<UiState<List<OrderItem>>> = MutableStateFlow(
@@ -31,21 +29,16 @@ class CartViewModel(
     val removeUiState: StateFlow<UiState<Boolean>>
         get() = _removeUiState
 
-    val totalPriceInCart = mutableStateOf(0.0)
 
-
-    fun getProductsInCart() {
+    fun addProductToCart(
+        product: ProductItem,
+        total: Int
+    ) {
         viewModelScope.launch {
-            repository.getAllProductInCart()
-                .catch {
-                    _productUiState.value = UiState.Error(it.message.toString())
-                }
-                .collect { items ->
-                    for (order in items){
-                        totalPriceInCart.value += order.item.price * order.count
-                    }
-                    _productUiState.value = UiState.Success(items)
-                }
+            repository.addProductToCart(
+                product = product,
+                total = total
+            )
         }
     }
 
@@ -56,10 +49,6 @@ class CartViewModel(
                     _updateUiState.value = UiState.Error(it.message.toString())
                 }
                 .collect { items ->
-                    //Update the latest total price in cart
-                    totalPriceInCart.value = 0.0
-                    getProductsInCart()
-
                     _updateUiState.value = UiState.Success(items)
                 }
         }
@@ -72,10 +61,6 @@ class CartViewModel(
                     _removeUiState.value = UiState.Error(it.message.toString())
                 }
                 .collect { items ->
-                    //Update the latest total price in cart
-                    totalPriceInCart.value = 0.0
-                    getProductsInCart()
-
                     _removeUiState.value = UiState.Success(items)
                 }
         }

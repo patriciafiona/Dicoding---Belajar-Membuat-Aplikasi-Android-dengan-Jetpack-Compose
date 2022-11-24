@@ -1,5 +1,7 @@
 package com.patriciafiona.subway.ui.screen.home
 
+import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -11,10 +13,10 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -26,6 +28,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.patriciafiona.subway.navigation.SubwayScreen
 import com.patriciafiona.subway.ui.common.UiState
 import com.patriciafiona.subway.ui.components.*
+import com.patriciafiona.subway.utils.BackPress
+import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
@@ -34,7 +38,33 @@ fun HomeScreen(
     viewModel: HomeViewModel = viewModel(
         factory = ViewModelFactory(Injection.provideRepository())
     ),
+    isAddedNewItem: Boolean? = false
 ){
+    //Backpress exit attributes
+    var showToast by remember { mutableStateOf(false) }
+
+    var backPressState by remember { mutableStateOf<BackPress>(BackPress.Idle) }
+    val context = LocalContext.current
+
+    if(showToast){
+        Toast.makeText(context, "Press again to exit", Toast.LENGTH_SHORT).show()
+        showToast= false
+    }
+
+
+    LaunchedEffect(key1 = backPressState) {
+        if (backPressState == BackPress.InitialTouch) {
+            delay(2000)
+            backPressState = BackPress.Idle
+        }
+    }
+
+    BackHandler(backPressState == BackPress.Idle) {
+        backPressState = BackPress.InitialTouch
+        showToast = true
+    }
+
+    //carousel state
     val carouselState = rememberPagerState()
 
     Scaffold(
@@ -45,7 +75,8 @@ fun HomeScreen(
                 },
                 goToDetail = {
                     navController.navigate(SubwayScreen.ProfileScreen.route)
-                }
+                },
+                isAddedNewItem = isAddedNewItem
             )
         },
         modifier = Modifier

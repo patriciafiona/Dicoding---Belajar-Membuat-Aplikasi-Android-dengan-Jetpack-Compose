@@ -34,8 +34,13 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.patriciafiona.subway.R
+import com.patriciafiona.subway.di.Injection
 import com.patriciafiona.subway.model.ProductItem
+import com.patriciafiona.subway.navigation.SubwayScreen
+import com.patriciafiona.subway.ui.ViewModelFactory
+import com.patriciafiona.subway.ui.components.AddRemoveButton
 import com.patriciafiona.subway.ui.components.Title
+import com.patriciafiona.subway.ui.screen.cart.CartViewModel
 import com.patriciafiona.subway.ui.theme.Marigold_100
 import com.patriciafiona.subway.ui.theme.VividGreen_100
 import com.patriciafiona.subway.ui.theme.VividGreen_300
@@ -43,7 +48,13 @@ import com.patriciafiona.subway.ui.theme.VividGreen_500
 import com.patriciafiona.subway.utils.Utils.toRupiah
 
 @Composable
-fun DetailScreen(navController: NavController, product: ProductItem) {
+fun DetailScreen(
+    navController: NavController,
+    product: ProductItem,
+    viewModel: DetailViewModel = androidx.lifecycle.viewmodel.compose.viewModel(
+        factory = ViewModelFactory(Injection.provideRepository())
+    )
+) {
 
     val totalOrder = remember{ mutableStateOf(1) }
 
@@ -62,11 +73,24 @@ fun DetailScreen(navController: NavController, product: ProductItem) {
             TopSection(product)
             DescriptionSection(product)
             WebsiteSection(product.web_url)
-            AddRemoveButton(totalOrder)
+            AddRemoveButton(
+                totalOrder,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 24.dp)
+            )
         }
 
         Button(
-            onClick = {  },
+            onClick = {
+                  //add to cart
+                  viewModel.addProductToCart(
+                      product = product,
+                      total = totalOrder.value
+                  )
+                //go to success screen
+                navController.navigate(SubwayScreen.SuccessAddToCartScreen.route)
+            },
             modifier = Modifier
                 .fillMaxWidth(),
             shape = RoundedCornerShape(50)
@@ -188,75 +212,4 @@ private fun DescriptionSection(product: ProductItem) {
             fontSize = 14.sp
         )
     )
-}
-
-@Composable
-private fun AddRemoveButton(totalOrder: MutableState<Int>) {
-    Row(
-        horizontalArrangement = Arrangement.SpaceAround,
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 24.dp)
-    ) {
-        IconButton(
-            onClick = {
-                if (totalOrder.value > 1) {
-                    totalOrder.value -= 1
-                }
-            }
-        ) {
-            Card(
-                modifier = Modifier
-                    .size(35.dp),
-                shape = CircleShape,
-                backgroundColor = VividGreen_100
-            ) {
-                Box(
-                    modifier = Modifier.size(15.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Remove,
-                        contentDescription = "Remove Icon",
-                        tint = Marigold_100,
-                        modifier = Modifier.align(Alignment.Center)
-                    )
-                }
-            }
-        }
-
-        Text(
-            text = totalOrder.value.toString(),
-            style = TextStyle(
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.Black
-            ),
-            modifier = Modifier.padding(horizontal = 16.dp)
-        )
-
-        IconButton(
-            onClick = {
-                totalOrder.value += 1
-            }
-        ) {
-            Card(
-                modifier = Modifier
-                    .size(35.dp),
-                shape = CircleShape,
-                backgroundColor = VividGreen_100
-            ) {
-                Box(
-                    modifier = Modifier.size(15.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Add,
-                        contentDescription = "Add Icon",
-                        tint = Marigold_100,
-                        modifier = Modifier.align(Alignment.Center)
-                    )
-                }
-            }
-        }
-    }
 }

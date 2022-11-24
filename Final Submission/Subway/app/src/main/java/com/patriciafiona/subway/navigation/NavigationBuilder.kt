@@ -11,13 +11,19 @@ import com.patriciafiona.subway.ui.screen.category.CategoryScreen
 import com.patriciafiona.subway.ui.screen.detail.DetailScreen
 import com.patriciafiona.subway.ui.screen.home.HomeScreen
 import com.patriciafiona.subway.ui.screen.profile.ProfileScreen
+import com.patriciafiona.subway.ui.screen.sucessAddToCart.SuccessAddToCart
 
 @Composable
 fun NavigationBuilder() {
     val navigationController = rememberNavController()
     NavHost(navController = navigationController, startDestination = SubwayScreen.HomeScreen.route){
-        composable(route = SubwayScreen.HomeScreen.route){
-            HomeScreen(navController = navigationController)
+        composable(route = SubwayScreen.HomeScreen.route){ previousBackStackEntry ->
+            val addedNewItem = previousBackStackEntry.arguments?.getBoolean("addedNewItem")
+            if (addedNewItem != null){
+                HomeScreen(navController = navigationController, isAddedNewItem = addedNewItem)
+            }else {
+                HomeScreen(navController = navigationController)
+            }
         }
         composable(route = SubwayScreen.DetailScreen.route){ previousBackStackEntry ->
             val product = previousBackStackEntry.arguments?.getParcelable<ProductItem>("product")
@@ -39,6 +45,9 @@ fun NavigationBuilder() {
         }
         composable(route = SubwayScreen.CartScreen.route){
             CartScreen(navController = navigationController)
+        }
+        composable(route = SubwayScreen.SuccessAddToCartScreen.route){
+            SuccessAddToCart(navController = navigationController)
         }
     }
 }

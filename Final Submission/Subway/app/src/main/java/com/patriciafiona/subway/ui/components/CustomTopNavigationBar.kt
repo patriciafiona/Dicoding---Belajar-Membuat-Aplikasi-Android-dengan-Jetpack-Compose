@@ -18,11 +18,15 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
 @Composable
-fun CustomTopNavigationBar(title: String, navController: NavController) {
+fun CustomTopNavigationBar(
+    title: String,
+    navController: NavController,
+    onClickAction: () -> Unit = {
+        navController.navigateUp()
+    }
+) {
     IconButton(
-        onClick = {
-            navController.navigateUp()
-        },
+        onClick = onClickAction,
         modifier = Modifier.padding(16.dp)
     ) {
         Row(

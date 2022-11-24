@@ -5,15 +5,17 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
+import androidx.compose.material.Card
+import androidx.compose.material.Divider
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -29,8 +31,11 @@ import com.patriciafiona.subway.ui.common.UiState
 import com.patriciafiona.subway.ui.components.CustomTopNavigationBar
 import com.patriciafiona.subway.ui.components.Loader
 import com.patriciafiona.subway.ui.components.ProductItem02
+import com.patriciafiona.subway.ui.components.ProductItem03
 import com.patriciafiona.subway.ui.screen.category.CategoryViewModel
 import com.patriciafiona.subway.ui.theme.VividGreen_100
+import com.patriciafiona.subway.ui.theme.VividGreen_300
+import com.patriciafiona.subway.utils.Utils.toRupiah
 
 @Composable
 fun CartScreen(
@@ -40,6 +45,7 @@ fun CartScreen(
     )
 ) {
     val animComposition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.empty_cart_green))
+    val totalPayment = remember { mutableStateOf(0.0) }
 
     Column(
         modifier = Modifier
@@ -47,7 +53,9 @@ fun CartScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        CustomTopNavigationBar(title= "My Cart", navController = navController)
+        CustomTopNavigationBar(title= "My Cart", navController = navController, onClickAction = {
+            navController.navigate(SubwayScreen.HomeScreen.route)
+        })
 
         viewModel.productUiState.collectAsState(initial = UiState.Loading).value.let { uiState ->
             when (uiState) {
@@ -62,16 +70,20 @@ fun CartScreen(
                             contentPadding = PaddingValues(horizontal = 16.dp),
                             modifier = Modifier
                                 .fillMaxWidth()
+                                .weight(1f)
                                 .padding(vertical = 10.dp)
                                 .testTag("productByCategoryList")
                         ) {
                             items(uiState.data){ order ->
-                                ProductItem02(
+                                ProductItem03(
                                     navController = navController,
-                                    product = order.item
+                                    order = order,
+                                    viewModel = viewModel
                                 )
                             }
                         }
+
+                        PaymentSummary(viewModel, totalPayment)
                     }else{
                         Column(
                             modifier = Modifier
@@ -115,5 +127,100 @@ fun CartScreen(
                 is UiState.Error -> {}
             }
         }
+    }
+}
+
+@Composable
+private fun PaymentSummary(
+    viewModel: CartViewModel,
+    totalPayment: MutableState<Double>
+) {
+    val deliveryFee = 11000.0
+    val serviceAndOtherFee = 8500.0
+
+    totalPayment.value = viewModel.totalPriceInCart.value + deliveryFee + serviceAndOtherFee
+
+    Card(
+        modifier = Modifier
+            .fillMaxWidth().
+                padding(16.dp)
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Text(
+                text = "Payment summary",
+                style = TextStyle(
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 18.sp,
+                    color = VividGreen_300
+                )
+            )
+
+            PaymentSummaryItem(
+                desc = "Price",
+                number = viewModel.totalPriceInCart.value
+            )
+
+            PaymentSummaryItem(
+                desc = "Delivery fee",
+                number = deliveryFee
+            )
+
+            PaymentSummaryItem(
+                desc = "Service and other fee",
+                number = serviceAndOtherFee
+            )
+
+            Divider(modifier = Modifier.padding(vertical = 10.dp))
+
+            Row {
+                Text(
+                    text = "Total Payment",
+                    style = TextStyle(
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 16.sp,
+                        color = Color.Black
+                    ),
+                    modifier = Modifier.weight(1f)
+                )
+
+                Text(
+                    text = toRupiah(totalPayment.value),
+                    style = TextStyle(
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 16.sp,
+                        color = Color.Black,
+                        textAlign = TextAlign.End
+                    ),
+                )
+            }
+
+        }
+    }
+}
+
+@Composable
+private fun PaymentSummaryItem(desc: String, number: Double) {
+    Row(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Text(
+            text = desc,
+            style = TextStyle(
+                color = Color.Gray,
+                fontSize = 12.sp
+            ),
+            modifier = Modifier.weight(1f)
+        )
+
+        Text(
+            text = toRupiah(number),
+            style = TextStyle(
+                color = Color.Black,
+                fontSize = 12.sp,
+                textAlign = TextAlign.End
+            ),
+        )
     }
 }

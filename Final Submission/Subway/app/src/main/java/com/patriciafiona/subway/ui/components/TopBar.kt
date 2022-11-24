@@ -3,7 +3,9 @@ package com.patriciafiona.subway.ui.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
+import androidx.compose.material.SnackbarDefaults.backgroundColor
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Person
@@ -26,7 +28,8 @@ import com.patriciafiona.subway.ui.theme.VividGreen_300
 @Composable
 fun TopHomeBar(
     goToDetail: () -> Unit,
-    goToCart: () -> Unit
+    goToCart: () -> Unit,
+    isAddedNewItem: Boolean? = false
 ) {
     TopAppBar (
         title = {
@@ -38,11 +41,26 @@ fun TopHomeBar(
         },
         actions = {
             Row {
-                IconButton(onClick = goToCart ) {
-                    Icon(
-                        imageVector = Icons.Default.ShoppingCart,
-                        contentDescription = "Cart"
-                    )
+                if (isAddedNewItem == true){
+                    IconButton(onClick = goToCart) {
+                        BadgedBox(
+                            badge = {
+                                Badge{}
+                            }
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.ShoppingCart,
+                                contentDescription = "Cart"
+                            )
+                        }
+                    }
+                }else {
+                    IconButton(onClick = goToCart) {
+                        Icon(
+                            imageVector = Icons.Default.ShoppingCart,
+                            contentDescription = "Cart"
+                        )
+                    }
                 }
                 IconButton(onClick = goToDetail ) {
                     Icon(
