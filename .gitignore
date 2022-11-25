@@ -1,3 +1,6 @@
+# Ignore Original project in ZIP
+**/Subway.zip
+
 # Gradle files
 .gradle/
 build/
