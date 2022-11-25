@@ -2,7 +2,6 @@ package com.patriciafiona.subway.ui.screen.category
 
 import android.content.res.Configuration
 import android.util.Log
-import android.widget.ScrollView
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn

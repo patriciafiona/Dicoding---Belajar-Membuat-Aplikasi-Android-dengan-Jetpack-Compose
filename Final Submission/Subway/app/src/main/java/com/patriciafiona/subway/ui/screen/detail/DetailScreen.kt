@@ -38,7 +38,6 @@ import com.patriciafiona.subway.navigation.SubwayScreen
 import com.patriciafiona.subway.ui.ViewModelFactory
 import com.patriciafiona.subway.ui.common.UiState
 import com.patriciafiona.subway.ui.components.AddRemoveButton
-import com.patriciafiona.subway.ui.components.Carousel
 import com.patriciafiona.subway.ui.components.Title
 import com.patriciafiona.subway.ui.theme.Marigold_100
 import com.patriciafiona.subway.ui.theme.VividGreen_100

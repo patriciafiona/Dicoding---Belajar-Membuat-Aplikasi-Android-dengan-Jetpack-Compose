@@ -27,7 +27,6 @@ import com.patriciafiona.subway.di.Injection
 import com.patriciafiona.subway.navigation.SubwayScreen
 import com.patriciafiona.subway.ui.ViewModelFactory
 import com.patriciafiona.subway.ui.common.UiState
-import com.patriciafiona.subway.ui.components.Carousel
 import com.patriciafiona.subway.ui.components.CustomTopNavigationBar
 import com.patriciafiona.subway.ui.components.Loader
 import com.patriciafiona.subway.ui.components.ProductItem01
