@@ -9,12 +9,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
-import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.patriciafiona.subway.R
 import com.patriciafiona.subway.navigation.SubwayScreen
@@ -22,7 +22,10 @@ import com.patriciafiona.subway.ui.theme.VividGreen_100
 import kotlinx.coroutines.delay
 
 @Composable
-fun SuccessAddToCart(navController: NavController){
+fun SuccessAddToCart(
+    navController: NavController,
+    isUpdate: Boolean? = null
+){
 
     LaunchedEffect(Unit) {
         delay(1500L)
@@ -49,11 +52,12 @@ fun SuccessAddToCart(navController: NavController){
         Spacer(modifier = Modifier.height(50.dp))
 
         Text(
-            text = "Success Add Item to Cart",
+            text = if(isUpdate == true) { "Success Update Item in the Cart" } else { "Success Add Item to Cart" },
              style = TextStyle(
                  fontSize = 24.sp,
                  color = VividGreen_100,
-                 fontWeight = FontWeight.Bold
+                 fontWeight = FontWeight.Bold,
+                  textAlign = TextAlign.Center
              )
         )
     }

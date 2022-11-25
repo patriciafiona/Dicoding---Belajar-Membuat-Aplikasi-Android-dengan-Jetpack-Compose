@@ -1,6 +1,5 @@
 package com.patriciafiona.subway.ui.components
 
-import android.widget.Space
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -30,14 +29,12 @@ import com.patriciafiona.subway.R
 import com.patriciafiona.subway.data.source.DataSource.products
 import com.patriciafiona.subway.di.Injection
 import com.patriciafiona.subway.model.OrderItem
-import com.patriciafiona.subway.model.ProductItem
 import com.patriciafiona.subway.navigation.SubwayScreen
 import com.patriciafiona.subway.ui.ViewModelFactory
 import com.patriciafiona.subway.ui.screen.cart.CartViewModel
 import com.patriciafiona.subway.ui.theme.VividGreen_100
 import com.patriciafiona.subway.utils.Utils
 import kotlinx.coroutines.delay
-import okhttp3.internal.wait
 
 @Composable
 fun ProductItem03(

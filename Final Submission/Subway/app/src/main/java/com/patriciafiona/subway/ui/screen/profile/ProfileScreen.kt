@@ -1,7 +1,5 @@
 package com.patriciafiona.subway.ui.screen.profile
 
-import android.graphics.drawable.Icon
-import android.icu.text.CaseMap
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -29,12 +27,8 @@ import com.patriciafiona.subway.di.Injection
 import com.patriciafiona.subway.navigation.SubwayScreen
 import com.patriciafiona.subway.ui.ViewModelFactory
 import com.patriciafiona.subway.ui.common.UiState
-import com.patriciafiona.subway.ui.components.Carousel
-import com.patriciafiona.subway.ui.components.DotsIndicator
 import com.patriciafiona.subway.ui.components.TitleSubtitle
 import com.patriciafiona.subway.ui.components.TopBackBar
-import com.patriciafiona.subway.ui.screen.home.HomeViewModel
-import com.patriciafiona.subway.ui.theme.Marigold_300
 import com.patriciafiona.subway.ui.theme.VividGreen_100
 import com.patriciafiona.subway.ui.theme.VividGreen_500
 

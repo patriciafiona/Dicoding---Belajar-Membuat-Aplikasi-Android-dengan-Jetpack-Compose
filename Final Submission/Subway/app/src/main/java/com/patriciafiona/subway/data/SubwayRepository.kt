@@ -1,5 +1,6 @@
 package com.patriciafiona.subway.data
 
+import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -10,7 +11,6 @@ import com.patriciafiona.subway.model.OrderItem
 import com.patriciafiona.subway.model.ProductItem
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
 
 class SubwayRepository {
     private val specialSelectionById: List<Long> = arrayListOf(
@@ -19,8 +19,8 @@ class SubwayRepository {
     private val promotions = mutableListOf<Int>()
     private val categories = mutableListOf<Category>()
     private val news = mutableListOf<News>()
-    private val specialSelection = mutableListOf<ProductItem>()
-    private val productsByCategoryId = mutableListOf<ProductItem>()
+    private val specialSelection = mutableStateListOf<ProductItem>()
+    private val productsByCategoryId = mutableStateListOf<ProductItem>()
     private val orders = mutableListOf<OrderItem>()
     private var myFavorites = mutableListOf<Long>()
     private val isQuickLogin = mutableStateOf(false)
@@ -91,6 +91,7 @@ class SubwayRepository {
     }
 
     fun getProductByCategoryId(categoryId: Int):  Flow<List<ProductItem>> {
+        Log.e("Product By ID","CALLED IN HERE")
         productsByCategoryId.clear()
         DataSource.products().filter {
             it.category_id == categoryId

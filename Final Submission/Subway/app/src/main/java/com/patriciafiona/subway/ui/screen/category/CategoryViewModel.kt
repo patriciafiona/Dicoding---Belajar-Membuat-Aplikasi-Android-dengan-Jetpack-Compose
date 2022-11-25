@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.patriciafiona.subway.data.SubwayRepository
 import com.patriciafiona.subway.model.Category
-import com.patriciafiona.subway.model.News
 import com.patriciafiona.subway.model.ProductItem
 import com.patriciafiona.subway.ui.common.UiState
 import kotlinx.coroutines.flow.MutableStateFlow

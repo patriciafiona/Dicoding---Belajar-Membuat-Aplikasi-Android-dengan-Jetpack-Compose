@@ -1,7 +1,5 @@
 package com.patriciafiona.subway.ui.components
 
-import android.R.attr.end
-import android.R.attr.maxLines
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape

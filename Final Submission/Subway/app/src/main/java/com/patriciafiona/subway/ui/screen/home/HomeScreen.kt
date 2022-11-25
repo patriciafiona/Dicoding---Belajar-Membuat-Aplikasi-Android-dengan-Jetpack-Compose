@@ -1,8 +1,8 @@
 package com.patriciafiona.subway.ui.screen.home
 
+import android.content.res.Configuration
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -16,16 +16,18 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
 import com.patriciafiona.subway.di.Injection
-import com.patriciafiona.subway.ui.ViewModelFactory
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.patriciafiona.subway.navigation.SubwayScreen
+import com.patriciafiona.subway.ui.ViewModelFactory
 import com.patriciafiona.subway.ui.common.UiState
 import com.patriciafiona.subway.ui.components.*
 import com.patriciafiona.subway.utils.BackPress
@@ -40,7 +42,10 @@ fun HomeScreen(
     ),
     isAddedNewItem: Boolean? = false
 ){
-    //Backpress exit attributes
+    //Screen config
+    val configuration = LocalConfiguration.current
+
+    //Back press exit attributes
     var showToast by remember { mutableStateOf(false) }
 
     var backPressState by remember { mutableStateOf<BackPress>(BackPress.Idle) }
@@ -67,6 +72,18 @@ fun HomeScreen(
     //carousel state
     val carouselState = rememberPagerState()
 
+    AppContent(navController, isAddedNewItem, viewModel, configuration, carouselState)
+}
+
+@OptIn(ExperimentalPagerApi::class)
+@Composable
+private fun AppContent(
+    navController: NavController,
+    isAddedNewItem: Boolean?,
+    viewModel: HomeViewModel,
+    configuration: Configuration,
+    carouselState: PagerState
+) {
     Scaffold(
         topBar = {
             TopHomeBar(
@@ -95,7 +112,14 @@ fun HomeScreen(
                     }
                     is UiState.Success -> {
                         Box {
-                            Carousel(uiState.data, carouselState)
+                            when (configuration.orientation) {
+                                Configuration.ORIENTATION_LANDSCAPE -> {
+                                    Carousel(uiState.data, carouselState, width = 550)
+                                }
+                                else -> {
+                                    Carousel(uiState.data, carouselState)
+                                }
+                            }
                             Box(
                                 modifier = Modifier
                                     .align(Alignment.BottomCenter)
@@ -115,7 +139,10 @@ fun HomeScreen(
             Spacer(modifier = Modifier.height(10.dp))
 
             //Menu Categories Section
-            TitleSubtitle(title = "Categories", subtitle = "Get your hands on these tasty foods & drinks")
+            TitleSubtitle(
+                title = "Categories",
+                subtitle = "Get your hands on these tasty foods & drinks"
+            )
 
             viewModel.categoriesUiState.collectAsState(initial = UiState.Loading).value.let { uiState ->
                 when (uiState) {
@@ -140,7 +167,10 @@ fun HomeScreen(
                 }
             }
 
-            TitleSubtitle(title = "Special selections", subtitle = "The best recommendation for our foods/drinks")
+            TitleSubtitle(
+                title = "Special selections",
+                subtitle = "The best recommendation for our foods/drinks"
+            )
             viewModel.favoriteUiState.collectAsState(initial = UiState.Loading).value.let { uiState ->
                 when (uiState) {
                     is UiState.Loading -> {
@@ -184,7 +214,10 @@ fun HomeScreen(
             }
 
             //News Section
-            TitleSubtitle(title = "Subways News", subtitle = "Get all latest news about Subways™ & our products")
+            TitleSubtitle(
+                title = "Subways News",
+                subtitle = "Get all latest news about Subways™ & our products"
+            )
             viewModel.newsUiState.collectAsState(initial = UiState.Loading).value.let { uiState ->
                 when (uiState) {
                     is UiState.Loading -> {

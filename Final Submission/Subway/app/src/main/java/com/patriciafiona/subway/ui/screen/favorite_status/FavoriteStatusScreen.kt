@@ -16,12 +16,14 @@ import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.patriciafiona.subway.R
-import com.patriciafiona.subway.navigation.SubwayScreen
 import com.patriciafiona.subway.ui.theme.VividGreen_100
 import kotlinx.coroutines.delay
 
 @Composable
-fun FavoriteStatus(navController: NavController, isAdd: Boolean){
+fun FavoriteStatus(
+    navController: NavController,
+    isAdd: Boolean
+){
     LaunchedEffect(Unit) {
         delay(1500L)
         navController.navigateUp()

@@ -11,7 +11,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
@@ -19,17 +18,17 @@ import coil.size.Scale
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
-import com.google.accompanist.pager.rememberPagerState
 import com.patriciafiona.subway.R
 import com.patriciafiona.subway.ui.theme.Marigold_100
 import com.patriciafiona.subway.ui.theme.VividGreen_300
-import com.patriciafiona.subway.ui.theme.VividGreen_700
 import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun Carousel(
-    images: List<Int>, carouselState: PagerState
+    images: List<Int>,
+    carouselState: PagerState,
+    width: Int? = null
 ) {
     LaunchedEffect(key1 = carouselState.currentPage) {
         delay(3000)
@@ -39,29 +38,48 @@ fun Carousel(
         carouselState.animateScrollToPage(newPosition)
     }
 
+
     HorizontalPager(
         state = carouselState,
         count = images.size
     ) { page ->
-        Column(
-            modifier = Modifier
-                .height(260.dp)
-                .fillMaxWidth(),
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Box(contentAlignment = Alignment.BottomCenter) {
-                val painter = rememberImagePainter(data = images[page], builder = {
-                    placeholder(R.drawable.placeholder)
-                    scale(Scale.FILL)
-                })
-                Image(
-                    painter = painter, contentDescription = "", Modifier
-                        .padding(8.dp).clip(RoundedCornerShape(10.dp))
-                        .fillMaxSize(), contentScale = ContentScale.Crop
-                )
+        if(width != null){
+            Column(
+                modifier = Modifier
+                    .height(300.dp)
+                    .width(width.dp),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                ImageContainer(images, page)
+            }
+        }else {
+            Column(
+                modifier = Modifier
+                    .height(260.dp)
+                    .fillMaxWidth(),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                ImageContainer(images, page)
             }
         }
+    }
+}
+
+@Composable
+private fun ImageContainer(images: List<Int>, page: Int) {
+    Box(contentAlignment = Alignment.BottomCenter) {
+        val painter = rememberImagePainter(data = images[page], builder = {
+            placeholder(R.drawable.placeholder)
+            scale(Scale.FILL)
+        })
+        Image(
+            painter = painter, contentDescription = "", Modifier
+                .padding(8.dp)
+                .clip(RoundedCornerShape(10.dp))
+                .fillMaxSize(), contentScale = ContentScale.Crop
+        )
     }
 }
 

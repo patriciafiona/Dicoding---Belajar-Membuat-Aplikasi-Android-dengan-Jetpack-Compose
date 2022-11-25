@@ -1,7 +1,6 @@
 package com.patriciafiona.subway.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -48,8 +47,9 @@ fun NavigationBuilder() {
         composable(route = SubwayScreen.CartScreen.route){
             CartScreen(navController = navigationController)
         }
-        composable(route = SubwayScreen.SuccessAddToCartScreen.route){
-            SuccessAddToCart(navController = navigationController)
+        composable(route = SubwayScreen.SuccessAddToCartScreen.route){ previousBackStackEntry ->
+            val isUpdate = previousBackStackEntry.arguments?.getBoolean("isUpdate")
+            SuccessAddToCart(navController = navigationController, isUpdate = isUpdate)
         }
         composable(route = SubwayScreen.FavoriteStatusScreen.route){ previousBackStackEntry ->
             val isAdd = previousBackStackEntry.arguments?.getBoolean("isAdd")

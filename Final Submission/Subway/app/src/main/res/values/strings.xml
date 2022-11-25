@@ -3,4 +3,5 @@
     <string name="menu_home">Home</string>
     <string name="menu_cart">Cart</string>
     <string name="menu_profile">Profile</string>
+    <string name="navigation_drawer">Navigation drawer</string>
 </resources>

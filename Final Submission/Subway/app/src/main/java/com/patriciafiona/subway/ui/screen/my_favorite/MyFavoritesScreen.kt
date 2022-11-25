@@ -1,19 +1,17 @@
 package com.patriciafiona.subway.ui.screen.my_favorite
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -29,6 +27,7 @@ import com.patriciafiona.subway.di.Injection
 import com.patriciafiona.subway.navigation.SubwayScreen
 import com.patriciafiona.subway.ui.ViewModelFactory
 import com.patriciafiona.subway.ui.common.UiState
+import com.patriciafiona.subway.ui.components.Carousel
 import com.patriciafiona.subway.ui.components.CustomTopNavigationBar
 import com.patriciafiona.subway.ui.components.Loader
 import com.patriciafiona.subway.ui.components.ProductItem01
@@ -39,9 +38,12 @@ fun MyFavoriteScreen(
     navController: NavController,
     viewModel: MyFavoriteViewModel = androidx.lifecycle.viewmodel.compose.viewModel(
         factory = ViewModelFactory(Injection.provideRepository())
-    ),
+    )
 ){
     val animComposition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.no_favorite))
+
+    //Screen config
+    val configuration = LocalConfiguration.current
 
     Column(
         modifier = Modifier
@@ -94,14 +96,29 @@ fun MyFavoriteScreen(
                                         verticalArrangement = Arrangement.Center,
                                         horizontalAlignment = Alignment.CenterHorizontally
                                     ) {
-                                        Box(modifier = Modifier.fillMaxWidth()){
-                                            LottieAnimation(
-                                                composition = animComposition,
-                                                modifier = Modifier
-                                                    .align(Alignment.Center)
-                                                    .fillMaxWidth(),
-                                                iterations = LottieConstants.IterateForever,
-                                            )
+                                        when (configuration.orientation) {
+                                            Configuration.ORIENTATION_LANDSCAPE -> {
+                                                Box(modifier = Modifier.size(100.dp)){
+                                                    LottieAnimation(
+                                                        composition = animComposition,
+                                                        modifier = Modifier
+                                                            .align(Alignment.Center)
+                                                            .fillMaxWidth(),
+                                                        iterations = LottieConstants.IterateForever,
+                                                    )
+                                                }
+                                            }
+                                            else -> {
+                                                Box(modifier = Modifier.fillMaxWidth()){
+                                                    LottieAnimation(
+                                                        composition = animComposition,
+                                                        modifier = Modifier
+                                                            .align(Alignment.Center)
+                                                            .fillMaxWidth(),
+                                                        iterations = LottieConstants.IterateForever,
+                                                    )
+                                                }
+                                            }
                                         }
 
                                         Text(

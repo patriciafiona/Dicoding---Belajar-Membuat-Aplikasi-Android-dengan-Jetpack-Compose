@@ -1,5 +1,6 @@
 package com.patriciafiona.subway.ui.components
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Card
@@ -22,7 +23,11 @@ import com.patriciafiona.subway.ui.theme.Marigold_100
 import com.patriciafiona.subway.ui.theme.VividGreen_100
 
 @Composable
-fun AddRemoveButton(totalOrder: MutableState<Int>, modifier: Modifier = Modifier, isInCart: Boolean = false) {
+fun AddRemoveButton(
+    totalOrder: MutableState<Int>,
+    modifier: Modifier = Modifier,
+    isInCart: Boolean = false
+) {
     Row(
         horizontalArrangement = Arrangement.SpaceAround,
         verticalAlignment = Alignment.CenterVertically,
@@ -32,6 +37,7 @@ fun AddRemoveButton(totalOrder: MutableState<Int>, modifier: Modifier = Modifier
             onClick = {
                 if (isInCart){
                     if (totalOrder.value > 0) {
+                        Log.e("Clicked","Remove from cart clicker")
                         totalOrder.value -= 1
                     }
                 }else{
